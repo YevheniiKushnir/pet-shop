@@ -1,7 +1,7 @@
 import Title from "../../ui/Title/Title";
 import Divider from "../../ui/Divider/Divider";
 import CrumbButton from "../../ui/Breadcrumbs/CrumbButton/CrumbButton";
-import CategoriesCard from "../CategoriesCard/CategoriesCard";
+import CategoryCard from "../CategoryCard/CategoryCard";
 import ListCards from "../ListCards/ListCards";
 import ErrorInfo from "../ErrorInfo/ErrorInfo";
 import { fetchAllCategories } from "../../utils/redux/slices/categoriesSlice";
@@ -32,7 +32,7 @@ const CategoriesSection = () => {
       </div>
       <ListCards loading={loading} skeletonCount={8}>
         {data.slice(0, 4).map((category) => (
-          <CategoriesCard key={category.id} {...category} />
+          <CategoryCard key={category.id} {...category} />
         ))}
       </ListCards>
     </section>

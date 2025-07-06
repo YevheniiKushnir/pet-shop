@@ -18,7 +18,7 @@ export const fetchAllCategories = createAsyncThunk(
       }));
     } catch (error) {
       return thunkAPI.rejectWithValue(
-        error?.message || "Error when loading a category"
+        error?.message || "Failed to fetch category"
       );
     }
   }
@@ -47,7 +47,7 @@ export const fetchCategoryWithProducts = createAsyncThunk(
       };
     } catch (error) {
       return thunkAPI.rejectWithValue(
-        error?.message || "Error when loading a category"
+        error?.message || "Failed to fetch category"
       );
     }
   }
@@ -82,6 +82,7 @@ const categoriesSlice = createSlice({
       .addCase(fetchCategoryWithProducts.pending, (state) => {
         state.loading = true;
         state.error = null;
+        state.current = null;
       })
       .addCase(fetchCategoryWithProducts.fulfilled, (state, action) => {
         state.loading = false;

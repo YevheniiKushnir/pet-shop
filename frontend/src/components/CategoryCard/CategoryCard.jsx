@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { ROUTES } from "../../utils/routes";
 import slugify from "../../utils/slugify";
 
-const CategoriesCard = React.memo(({ image, title }) => {
+const CategoryCard = React.memo(({ image, title }) => {
   return (
     <Link
       className="transition-transform duration-300 hover:scale-105 hover:-translate-y-2 active:scale-105 active:-translate-y-2 w-max flex flex-col items-center"
@@ -15,4 +15,4 @@ const CategoriesCard = React.memo(({ image, title }) => {
   );
 });
 
-export default CategoriesCard;
+export default CategoryCard;

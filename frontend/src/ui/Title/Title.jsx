@@ -1,10 +1,12 @@
-const Title = ({ children, className = "" }) => {
+import clsx from "clsx";
+
+const Title = ({ children, className }) => {
   return (
     <h2
-      className={
-        "font-bold text-4xl md:text-5xl lg:text-[64px] break-word w-fit " +
+      className={clsx(
+        "font-bold text-4xl md:text-5xl lg:text-[64px] break-word w-fit",
         className
-      }
+      )}
     >
       {children}
     </h2>

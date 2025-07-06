@@ -42,7 +42,6 @@ const Header = () => {
             className="group-hover:-translate-y-1 group-hover:rotate-6 group-hover:scale-105 group-active:-translate-y-1 group-active:rotate-6 group-active:scale-105 transition-transform duration-300 w-10 md:w-12"
           />
         </CartBadge>
-        <Divider className="absolute bottom-0 left-1/2 right-1/2 -translate-x-1/2 w-screen" />
 
         {menuOpen && (
           <RemoveScroll>
@@ -54,6 +53,7 @@ const Header = () => {
             </div>
           </RemoveScroll>
         )}
+        <Divider className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-screen max-w-[1440px]" />
       </header>
     </>
   );

@@ -37,7 +37,7 @@ const CategoryPage = () => {
     <div>
       <Breadcrumbs />
       <Title className="mb-[var(--m-bottom-title-xs)] md:mb-[var(--m-bottom-title-md)]">
-        {current.category.title}
+        {current?.category.title}
       </Title>
 
       {/* отрисуй продукты из current.data */}

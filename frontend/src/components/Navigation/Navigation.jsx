@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { LINKS } from "../../utils/routes.js";
+import clsx from "clsx";
 
 const Navigation = ({ className = "" }) => {
   return (
@@ -9,9 +10,10 @@ const Navigation = ({ className = "" }) => {
           key={to}
           to={to}
           className={({ isActive }) =>
-            `hover:text-main-blue hover:-translate-y-0.5 active:text-main-blue active:scale-95 transition-all duration-300 w-max ${
+            clsx(
+              "hover:text-main-blue hover:-translate-y-0.5 active:text-main-blue active:scale-95 transition-all duration-300 w-max",
               isActive ? "text-main-blue" : "text-main-black"
-            }`
+            )
           }
         >
           {label}

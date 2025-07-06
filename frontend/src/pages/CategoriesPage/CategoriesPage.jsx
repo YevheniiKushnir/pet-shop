@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Title from "../../ui/Title/Title";
 import Breadcrumbs from "../../ui/Breadcrumbs/Breadcrumbs";
 import ErrorInfo from "../../components/ErrorInfo/ErrorInfo";
-import CategoriesCard from "../../components/CategoriesCard/CategoriesCard";
+import CategoryCard from "../../components/CategoryCard/CategoryCard";
 import ListCards from "../../components/ListCards/ListCards";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllCategories } from "../../utils/redux/slices/categoriesSlice";
@@ -29,7 +29,7 @@ const CategoriesPage = () => {
       </Title>
       <ListCards loading={loading} skeletonCount={8}>
         {data.map((category) => (
-          <CategoriesCard key={category.id} {...category} />
+          <CategoryCard key={category.id} {...category} />
         ))}
       </ListCards>
     </div>

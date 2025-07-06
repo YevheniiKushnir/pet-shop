@@ -28,9 +28,7 @@ const Footer = () => {
               size={44}
               alt={"Instagram"}
               external={true}
-              className={
-                "hover:opacity-80 hover:scale-110 active:opacity-80 active:scale-110 w-8 md:w-11"
-              }
+              className="hover:opacity-80 hover:scale-110 active:opacity-80 active:scale-110 w-8 md:w-11"
             />
             <IconLink
               to="https://www.whatsapp.com/"
@@ -38,9 +36,7 @@ const Footer = () => {
               size={44}
               alt={"Whatsapp"}
               external={true}
-              className={
-                "hover:opacity-80 hover:scale-110 active:opacity-80 active:scale-110 w-8 md:w-11"
-              }
+              className="hover:opacity-80 hover:scale-110 active:opacity-80 active:scale-110 w-8 md:w-11"
             />
           </div>
         </div>

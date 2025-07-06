@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import clsx from "clsx";
 
 const IconLink = ({
   to = "/",
@@ -14,7 +15,10 @@ const IconLink = ({
       alt={alt}
       width={size}
       height={size}
-      className={`object-contain transition-transform duration-300 ease-in-out ${className}`}
+      className={clsx(
+        "object-contain transition-transform duration-300 ease-in-out",
+        className
+      )}
     />
   );
 
