@@ -1,35 +1,40 @@
-import { useState } from "react";
 import CustomCheckbox from "./CustomCheckbox/CustomCheckbox";
 import CustomSelect from "./CustomSelect/CustomSelect";
+import CustomInput from "./CustomInput/CustomInput";
 
-const FilterSection = () => {
-  const [isChecked, setIsChecked] = useState(true);
-  const [sortOption, setSortOption] = useState("by default");
-
-  const sortOptions = [
-    "by default",
-    "newest",
-    "price: high-low",
-    "price: low-high",
-  ];
-
+const FilterSection = ({
+  priceFrom,
+  setPriceFrom,
+  priceTo,
+  setPriceTo,
+  discountOnly,
+  setDiscountOnly,
+  sortOption,
+  setSortOption,
+  hiddenCheckbox = false,
+}) => {
   return (
-    <div className="p-5 max-w-md flex items-center gap-10">
-      <div className="mb-6">
-        <CustomCheckbox
-          label="check box"
-          checked={isChecked}
-          onChange={setIsChecked}
-        />
+    <div className="flex items-center gap-4 lg:gap-10 flex-col md:flex-row flex-wrap w-full my-[var(--m-bottom-title-xs)] md:my-[var(--m-bottom-title-md)]">
+      <div className="flex gap-4 items-center">
+        <p className="font-semibold">Price</p>
+        <CustomInput name="from" value={priceFrom} onChange={setPriceFrom} />
+        <CustomInput name="to" value={priceTo} onChange={setPriceTo} />
       </div>
 
-      <div className="flex">
-        <p className="text-sm text-main-grey mb-2">sort</p>
-        <CustomSelect
-          options={sortOptions}
-          selectedValue={sortOption}
-          onSelect={setSortOption}
-        />
+      {!hiddenCheckbox && (
+        <div className="flex gap-4 items-center">
+          <p className="font-semibold w-max text-nowrap">Discounted items</p>
+          <CustomCheckbox
+            label="check box"
+            checked={discountOnly}
+            onChange={setDiscountOnly}
+          />
+        </div>
+      )}
+
+      <div className="flex gap-4 items-center">
+        <p className="font-semibold">Sorted</p>
+        <CustomSelect selectedValue={sortOption} onSelect={setSortOption} />
       </div>
     </div>
   );

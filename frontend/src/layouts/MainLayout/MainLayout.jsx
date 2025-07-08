@@ -9,8 +9,8 @@ const MainLayout = ({ children }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchAllCategories);
-    dispatch(fetchAllProducts);
+    dispatch(fetchAllCategories());
+    dispatch(fetchAllProducts());
   }, [dispatch]);
 
   return (

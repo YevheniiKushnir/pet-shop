@@ -2,29 +2,29 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllProducts } from "../../utils/redux/slices/productsSlice";
 import BreadCrumbs from "../../ui/BreadCrumbs/BreadCrumbs";
-import { getLinkFromRoute, ROUTES } from "../../utils/routes";
 import Title from "../../ui/Title/Title";
 import FilterSection from "../../components/FilterSection/FilterSection";
+import { getLinkFromRoute, ROUTES } from "../../utils/routes";
+import filterAndSortProducts from "../../utils/filterAndSortProducts";
+import ErrorInfo from "../../components/ErrorInfo/ErrorInfo";
 import ListCards from "../../components/ListCards/ListCards";
 import ProductCard from "../../components/ProductCard/ProductCard";
-import ErrorInfo from "../../components/ErrorInfo/ErrorInfo";
-import filterAndSortProducts from "../../utils/filterAndSortProducts";
 
-const ProductsPage = () => {
+const DiscountsPage = () => {
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector((store) => store.products);
-  const titleOfPage = getLinkFromRoute(ROUTES.PRODUCTS).label;
+  const titleOfPage = getLinkFromRoute(ROUTES.SALES).specLabel;
 
   useEffect(() => {
     if (!data.length) {
       dispatch(fetchAllProducts());
     }
-  }, [data.length, dispatch, data]);
+  });
 
-  //FILTER AND SORT BY
+  // FILTER AND SORT BY
   const [priceFrom, setPriceFrom] = useState("");
   const [priceTo, setPriceTo] = useState("");
-  const [discountOnly, setDiscountOnly] = useState(false);
+  const [discountOnly, setDiscountOnly] = useState(true);
   const [sortOption, setSortOption] = useState("by default");
 
   const filteredData = useMemo(() => {
@@ -50,6 +50,7 @@ const ProductsPage = () => {
         setDiscountOnly={setDiscountOnly}
         sortOption={sortOption}
         setSortOption={setSortOption}
+        hiddenCheckbox={true}
       />
       {error ? (
         <ErrorInfo />
@@ -64,4 +65,4 @@ const ProductsPage = () => {
   );
 };
 
-export default ProductsPage;
+export default DiscountsPage;

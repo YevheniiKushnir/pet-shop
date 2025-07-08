@@ -17,7 +17,7 @@ function priceFormatting(price) {
 
 const ProductCard = React.memo(
   ({ image, title, categoryId, price, discont_price }) => {
-    const [sale, setSale] = useState(0);
+    const [sale, setSale] = useState(null);
     const categories = useSelector((state) => state.categories.data);
 
     const category = categories.find((cat) => cat.id === categoryId);

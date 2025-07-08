@@ -1,6 +1,7 @@
 import clsx from "clsx";
+import React from "react";
 
-const CustomCheckbox = ({ label, checked = false, onChange }) => {
+const CustomCheckbox = React.memo(({ checked = false, onChange }) => {
   return (
     <label className="flex items-center space-x-3 cursor-pointer">
       <div className="relative">
@@ -12,7 +13,7 @@ const CustomCheckbox = ({ label, checked = false, onChange }) => {
         />
         <div
           className={clsx(
-            "w-5 h-5 border rounded flex items-center justify-center transition-colors",
+            "w-8 h-8 border rounded flex items-center justify-center transition-colors",
             checked
               ? "bg-main-blue border-main-blue"
               : "bg-main-white border-light-grey"
@@ -20,7 +21,7 @@ const CustomCheckbox = ({ label, checked = false, onChange }) => {
         >
           {checked && (
             <svg
-              className="w-3 h-3 text-main-white"
+              className="w-5 h-5 text-main-white"
               viewBox="0 0 12 9"
               fill="none"
             >
@@ -35,9 +36,8 @@ const CustomCheckbox = ({ label, checked = false, onChange }) => {
           )}
         </div>
       </div>
-      <span className="text-main-black">{label}</span>
     </label>
   );
-};
+});
 
 export default CustomCheckbox;
