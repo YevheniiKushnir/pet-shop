@@ -16,16 +16,12 @@ function App() {
       <Routes>
         <Route path={ROUTES.MAIN} element={<MainPage />} />
         <Route path={ROUTES.CATEGORIES} element={<CategoriesPage />} />
-        <Route path={`${ROUTES.CATEGORIES}/:slug`} element={<CategoryPage />} />
+        <Route path={`${ROUTES.PRODUCTS}`} element={<ProductsPage />} />
         <Route
           path={`${ROUTES.CATEGORIES}/:slug/:productSlug`}
           element={<ProductPage />}
         />
-        <Route path={`${ROUTES.PRODUCTS}`} element={<ProductsPage />} />
-        <Route
-          path={`${ROUTES.PRODUCTS}/:productSlug`}
-          element={<ProductPage />}
-        />
+        <Route path={`${ROUTES.CATEGORIES}/:slug`} element={<CategoryPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </MainLayout>

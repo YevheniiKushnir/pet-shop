@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../utils/routes";
-import slugify from "../../utils/slugify";
+import { slugify } from "../../utils/slugify";
 
 const CategoryCard = React.memo(({ image, title }) => {
   return (

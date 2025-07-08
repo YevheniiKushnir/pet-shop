@@ -23,24 +23,22 @@ const saleSlice = createSlice({
     message: "",
     loading: false,
     error: null,
+    success: null,
   },
-  reducers: {
-    resetSaleState: (state) => {
-      state.status = null;
-      state.message = "";
-      state.loading = false;
-      state.error = null;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(sendSaleRequest.pending, (state) => {
         state.loading = true;
+        state.status = null;
+        state.message = "";
         state.error = null;
+        state.success = null;
       })
       .addCase(sendSaleRequest.fulfilled, (state, action) => {
         state.loading = false;
         state.status = action.payload.status;
+        state.success = true;
         state.message = action.payload.message;
       })
       .addCase(sendSaleRequest.rejected, (state, action) => {
@@ -50,5 +48,4 @@ const saleSlice = createSlice({
   },
 });
 
-export const { resetSaleState } = saleSlice.actions;
 export default saleSlice.reducer;

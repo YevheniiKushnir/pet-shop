@@ -53,7 +53,7 @@ const Header = () => {
             </div>
           </RemoveScroll>
         )}
-        <Divider className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-screen max-w-[1440px]" />
+        <Divider className="absolute bottom-0 left-1/2  -translate-x-1/2 w-screen max-w-[1440px]" />
       </header>
     </>
   );

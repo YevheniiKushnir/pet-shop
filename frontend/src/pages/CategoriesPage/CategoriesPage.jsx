@@ -1,37 +1,39 @@
 import React, { useEffect } from "react";
 import Title from "../../ui/Title/Title";
-import Breadcrumbs from "../../ui/Breadcrumbs/Breadcrumbs";
+import BreadCrumbs from "../../ui/BreadCrumbs/BreadCrumbs";
 import ErrorInfo from "../../components/ErrorInfo/ErrorInfo";
 import CategoryCard from "../../components/CategoryCard/CategoryCard";
 import ListCards from "../../components/ListCards/ListCards";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllCategories } from "../../utils/redux/slices/categoriesSlice";
+import { ROUTES, getLinkFromRoute } from "../../utils/routes";
 
 const CategoriesPage = () => {
   const { data, loading, error } = useSelector((store) => store.categories);
   const dispatch = useDispatch();
+  const titleOfPage = getLinkFromRoute(ROUTES.CATEGORIES).label;
 
   useEffect(() => {
-    if (data.length === 0) {
+    if (!data.length) {
       dispatch(fetchAllCategories());
     }
   }, [data.length, dispatch]);
 
-  if (error) {
-    return <ErrorInfo />;
-  }
-
   return (
     <div className="mb-14 md:mb-28">
-      <Breadcrumbs />
+      <BreadCrumbs />
       <Title className="mb-[var(--m-bottom-title-xs)] md:mb-[var(--m-bottom-title-md)]">
-        Categories
+        {titleOfPage}
       </Title>
-      <ListCards loading={loading} skeletonCount={8}>
-        {data.map((category) => (
-          <CategoryCard key={category.id} {...category} />
-        ))}
-      </ListCards>
+      {error ? (
+        <ErrorInfo />
+      ) : (
+        <ListCards loading={loading} skeletonCount={8}>
+          {data.map((category) => (
+            <CategoryCard key={category.id} {...category} />
+          ))}
+        </ListCards>
+      )}
     </div>
   );
 };

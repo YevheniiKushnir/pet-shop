@@ -1,16 +1,17 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import { ROUTES, LINKS } from "../../utils/routes";
+import { ROUTES, LINKS, getLinkFromRoute } from "../../utils/routes.js";
 import { useSelector } from "react-redux";
-import CrumbButton from "./CrumbButton/CrumbButton";
-import getValueBySlug from "../../utils/getValueBySlug.js";
+import CrumbButton from "./CrumbButton/CrumbButton.jsx";
+import { getValueBySlug } from "../../utils/slugify.js";
 import Divider from "../Divider/Divider.jsx";
 
-const Breadcrumbs = () => {
+const BreadCrumbs = () => {
   const location = useLocation();
   const { data: categories } = useSelector((state) => state.categories);
+  const { data: products } = useSelector((state) => state.products);
   const pathnames = location.pathname.split("/").filter(Boolean);
-  const mainPage = LINKS.find((link) => link.to === ROUTES.MAIN);
+  const mainPage = getLinkFromRoute(ROUTES.MAIN);
 
   return (
     <nav className="flex flex-wrap gap-y-2 items-center w-full  overflow-x-auto mb-[var(--m-bottom-title-xs)] md:mb-[var(--m-bottom-title-md)]">
@@ -25,12 +26,10 @@ const Breadcrumbs = () => {
         );
 
         const reqCategory = getValueBySlug(categories, value);
+        const reqProduct = getValueBySlug(products, value);
 
-        const label = linkMatch?.label || reqCategory?.title || value;
-
-        //         // const reqProduct = getProductBySlug(products, value); // если надо
-
-        // const label = linkMatch?.label || reqCategory?.title /* || reqProduct?.title */ || value;
+        const label =
+          linkMatch?.label || reqCategory?.title || reqProduct?.title || value;
 
         return (
           <React.Fragment key={to}>
@@ -45,4 +44,4 @@ const Breadcrumbs = () => {
   );
 };
 
-export default Breadcrumbs;
+export default BreadCrumbs;

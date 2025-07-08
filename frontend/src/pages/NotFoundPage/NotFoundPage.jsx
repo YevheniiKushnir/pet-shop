@@ -14,7 +14,7 @@ const NotFound = () => {
           to the homepage.
         </p>
       </div>
-      <Button className="max-w-[200px]" to={ROUTES.MAIN}>
+      <Button className="max-w-[200px] w-full" to={ROUTES.MAIN}>
         Go Home
       </Button>
     </div>

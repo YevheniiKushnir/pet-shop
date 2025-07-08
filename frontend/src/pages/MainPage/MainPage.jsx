@@ -3,6 +3,7 @@ import Button from "../../ui/Button/Button";
 import banner1 from "../../assets/banner/banner.png";
 import CategoriesSection from "../../components/CategoriesSection/CategoriesSection";
 import FormSection from "../../components/FormSection/FormSection";
+import SaleSection from "../../components/SaleSection/SaleSection";
 import { ROUTES } from "../../utils/routes";
 
 const MainPage = () => {
@@ -18,6 +19,7 @@ const MainPage = () => {
       </BannerFull>
       <CategoriesSection />
       <FormSection />
+      <SaleSection />
     </div>
   );
 };

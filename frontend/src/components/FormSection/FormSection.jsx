@@ -7,29 +7,60 @@ import ErrorInfo from "../ErrorInfo/ErrorInfo";
 import Alert from "../../ui/Alert/Alert";
 import { useDispatch, useSelector } from "react-redux";
 import { sendSaleRequest } from "../../utils/redux/slices/saleSlice";
+import resetImg from "../../assets/reset.svg";
+
+const SALE_SUBMITTED = "sale_submitted";
+const SALE_FORM_DATA = "sale_form_data";
 
 const FormSection = () => {
+  const dispatch = useDispatch();
+  const {
+    loading,
+    status: success,
+    error,
+  } = useSelector((state) => state.sale);
+
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   const {
     register,
     handleSubmit,
+    setValue,
+    getValues,
+    reset,
     formState: { errors },
   } = useForm();
-  const [alertOpen, setAlertOpen] = useState(false);
 
-  const dispatch = useDispatch();
-  const { loading, status, error } = useSelector((state) => state.sale);
+  useEffect(() => {
+    const submitted = localStorage.getItem(SALE_SUBMITTED);
+    const formData = JSON.parse(localStorage.getItem(SALE_FORM_DATA) || "{}");
+
+    if (submitted) {
+      setIsSubmitted(true);
+      Object.entries(formData).forEach(([key, value]) => {
+        setValue(key, value);
+      });
+    }
+  }, [setValue]);
+
+  useEffect(() => {
+    const submitted = localStorage.getItem(SALE_SUBMITTED);
+
+    if (success && !submitted) {
+      setAlertOpen(true);
+      localStorage.setItem(SALE_SUBMITTED, "true");
+      localStorage.setItem(SALE_FORM_DATA, JSON.stringify(getValues()));
+      setIsSubmitted(true);
+    }
+  }, [success, getValues]);
 
   const onSubmit = (data) => {
+    if (isSubmitted) return;
     dispatch(sendSaleRequest(data));
   };
 
-  useEffect(() => {
-    if (status === "OK") {
-      setAlertOpen(true);
-    }
-  }, [status]);
-
-  const disabled = loading || status === "OK";
+  const disabled = loading || isSubmitted;
 
   if (error) {
     return <ErrorInfo />;
@@ -86,16 +117,33 @@ const FormSection = () => {
             >
               {disabled ? "Request Submitted" : "Get a discount"}
             </button>
+            {!loading && isSubmitted && (
+              <button
+                type="button"
+                onClick={() => {
+                  localStorage.removeItem(SALE_SUBMITTED);
+                  localStorage.removeItem(SALE_FORM_DATA);
+                  setIsSubmitted(false);
+                  reset();
+                }}
+                className="absolute top-0 right-0 w-10 md:w-12 cursor-pointer hover:rotate-90 transition-transform duration-300"
+              >
+                <img src={resetImg} alt="" />
+              </button>
+            )}
           </form>
         </div>
       </div>
-      <Alert
-        title={"Congratulations!"}
-        p1={"Thank you! Your request was submitted successfully."}
-        p2={"Check your email to get the discount bonus."}
-        isOpen={alertOpen}
-        onClose={() => setAlertOpen(false)}
-      />
+
+      {alertOpen && (
+        <Alert
+          title={"Congratulations!"}
+          p1={"Thank you! Your request was submitted successfully."}
+          p2={"Check your email to get the discount bonus."}
+          isOpen={alertOpen}
+          onClose={() => setAlertOpen(false)}
+        />
+      )}
     </section>
   );
 };

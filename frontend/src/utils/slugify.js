@@ -1,4 +1,4 @@
-const slugify = (text) =>
+export const slugify = (text) =>
   text
     .toLowerCase()
     .trim()
@@ -6,4 +6,6 @@ const slugify = (text) =>
     .replace(/[^\w-]+/g, "")
     .replace(/--+/g, "-");
 
-export default slugify;
+export const getValueBySlug = (dataFromRedux, slug) => {
+  return dataFromRedux.find((dataItem) => slugify(dataItem.title) === slug);
+};

@@ -7,8 +7,8 @@ import {
 } from "../../utils/redux/slices/categoriesSlice";
 import ListCards from "../../components/ListCards/ListCards.jsx";
 import Title from "../../ui/Title/Title";
-import Breadcrumbs from "../../ui/Breadcrumbs/Breadcrumbs";
-import getValueBySlug from "../../utils/getValueBySlug.js";
+import BreadCrumbs from "../../ui/BreadCrumbs/BreadCrumbs.jsx";
+import { getValueBySlug } from "../../utils/slugify.js";
 
 const CategoryPage = () => {
   const { slug } = useParams();
@@ -18,7 +18,7 @@ const CategoryPage = () => {
   );
 
   useEffect(() => {
-    if (data.length === 0) {
+    if (!data.length) {
       dispatch(fetchAllCategories());
     }
   }, [data.length, dispatch]);
@@ -35,12 +35,12 @@ const CategoryPage = () => {
 
   return (
     <div>
-      <Breadcrumbs />
+      <BreadCrumbs />
       <Title className="mb-[var(--m-bottom-title-xs)] md:mb-[var(--m-bottom-title-md)]">
         {current?.category.title}
       </Title>
 
-      {/* отрисуй продукты из current.data */}
+      {/* current.data */}
     </div>
   );
 };

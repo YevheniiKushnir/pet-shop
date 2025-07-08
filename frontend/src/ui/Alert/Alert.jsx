@@ -5,10 +5,13 @@ import closeImg from "../../assets/close.svg";
 
 const Alert = ({ title, p1, p2, isOpen, onClose }) => {
   const [isClosing, setIsClosing] = useState(false);
+  const [shouldRender, setShouldRender] = useState(isOpen);
 
+  // Looking for isOpen from parent
   useEffect(() => {
     if (isOpen) {
-      setIsClosing(false);
+      // setIsClosing(false); //when there's no condition in the parent {isOpen && <Alert/>}
+      setShouldRender(true);
 
       const timer = setTimeout(() => {
         setIsClosing(true);
@@ -18,26 +21,29 @@ const Alert = ({ title, p1, p2, isOpen, onClose }) => {
     }
   }, [isOpen]);
 
-  const handleClose = () => {
-    setIsClosing(true);
-  };
-
+  // Looking for completted animation (isClosing)
   const handleTransitionEnd = (e) => {
-    console.log("Transition ended on", e.target, e.propertyName);
-    if (isClosing) {
+    if (
+      isClosing &&
+      e.target === e.currentTarget &&
+      e.propertyName === "opacity"
+    ) {
+      setShouldRender(false);
       onClose();
     }
   };
 
-  if (!isOpen && !isClosing) {
-    return null;
-  }
+  const handleClose = () => {
+    setIsClosing(true);
+  };
 
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
       handleClose();
     }
   };
+
+  if (!shouldRender) return null;
 
   return (
     <RemoveScroll>
@@ -46,18 +52,17 @@ const Alert = ({ title, p1, p2, isOpen, onClose }) => {
         onTransitionEnd={handleTransitionEnd}
         className={clsx(
           "fixed top-0 bottom-0 left-0 right-0 bg-[rgba(40,40,40,0.5)] backdrop-blur-sm flex justify-center items-start z-100",
-          "transition-all duration-500 ease-in-out",
+          "transition-opacity duration-500 ease-in-out",
           {
             "opacity-0 pointer-events-none": isClosing,
             "opacity-100 pointer-events-auto": !isClosing,
           }
         )}
-        style={{ transitionProperty: "opacity" }}
       >
         <div
           className={clsx(
             "flex gap-4 max-w-[550px] h-max bg-main-blue text-main-white p-4 md:p-8 m-4 rounded-xl mt-[20vh]",
-            "transform transition-transform duration-500 ease-in-out",
+            "transition-transform duration-500 ease-in-out",
             {
               "-translate-y-10": isClosing,
               "translate-y-0": !isClosing,
