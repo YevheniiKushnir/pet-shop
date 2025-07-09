@@ -3,13 +3,14 @@ import { useLocation } from "react-router-dom";
 import { ROUTES, LINKS, getLinkFromRoute } from "../../utils/routes.js";
 import { useSelector } from "react-redux";
 import CrumbButton from "./CrumbButton/CrumbButton.jsx";
-import { getValueBySlug } from "../../utils/slugify.js";
+import { getIdFromSlug, getCategoryBySlug } from "../../utils/slugify.js";
 import Divider from "../Divider/Divider.jsx";
 
 const BreadCrumbs = () => {
   const location = useLocation();
   const { data: categories } = useSelector((state) => state.categories);
-  const { data: products } = useSelector((state) => state.products);
+  const { current: currentProduct } = useSelector((state) => state.products);
+
   const pathnames = location.pathname.split("/").filter(Boolean);
   const mainPage = getLinkFromRoute(ROUTES.MAIN);
 
@@ -25,11 +26,13 @@ const BreadCrumbs = () => {
           (link) => link.to.toLowerCase() === to.toLowerCase()
         );
 
-        const reqCategory = getValueBySlug(categories, value);
-        const reqProduct = getValueBySlug(products, value);
+        const reqCategory = getCategoryBySlug(categories, value);
 
         const label =
-          linkMatch?.label || reqCategory?.title || reqProduct?.title || value;
+          linkMatch?.label ||
+          reqCategory?.title ||
+          currentProduct?.title ||
+          value;
 
         return (
           <React.Fragment key={to}>

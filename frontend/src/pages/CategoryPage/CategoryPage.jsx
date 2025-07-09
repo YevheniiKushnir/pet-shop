@@ -11,7 +11,7 @@ import BreadCrumbs from "../../ui/BreadCrumbs/BreadCrumbs.jsx";
 import FilterSection from "../../components/FilterSection/FilterSection.jsx";
 import ErrorInfo from "../../components/ErrorInfo/ErrorInfo.jsx";
 import ProductCard from "../../components/ProductCard/ProductCard.jsx";
-import { getValueBySlug } from "../../utils/slugify.js";
+import { getCategoryBySlug } from "../../utils/slugify.js";
 import filterAndSortProducts from "../../utils/filterAndSortProducts.js";
 
 const CategoryPage = () => {
@@ -29,7 +29,7 @@ const CategoryPage = () => {
 
   useEffect(() => {
     if (data.length > 0 && slug) {
-      const reqCategory = getValueBySlug(data, slug);
+      const reqCategory = getCategoryBySlug(data, slug);
 
       if (reqCategory) {
         dispatch(fetchCategoryWithProducts(reqCategory.id));

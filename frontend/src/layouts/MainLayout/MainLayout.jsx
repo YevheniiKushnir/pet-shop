@@ -3,14 +3,12 @@ import Footer from "../Footer/Footer";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchAllCategories } from "../../utils/redux/slices/categoriesSlice";
-import { fetchAllProducts } from "../../utils/redux/slices/productsSlice";
 
 const MainLayout = ({ children }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchAllCategories());
-    dispatch(fetchAllProducts());
   }, [dispatch]);
 
   return (

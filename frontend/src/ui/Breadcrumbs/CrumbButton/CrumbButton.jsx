@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import clsx from "clsx";
 
 const CrumbButton = ({ children, to, isLast }) => {
+  const isTruncated = typeof children === "string" && children.length > 20;
+
   return (
     <Link
       to={to}
@@ -13,7 +15,13 @@ const CrumbButton = ({ children, to, isLast }) => {
         }
       )}
     >
-      {children}
+      <span
+        className={clsx(
+          isTruncated && "truncate max-w-[250px] md:max-w-none block"
+        )}
+      >
+        {children}
+      </span>
     </Link>
   );
 };

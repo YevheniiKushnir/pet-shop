@@ -51,7 +51,11 @@ const productsSlice = createSlice({
     loading: false,
     error: null,
   },
-  reducers: {},
+  reducers: {
+    setCurrentProduct: (state, action) => {
+      state.current = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       // All products
@@ -85,4 +89,5 @@ const productsSlice = createSlice({
   },
 });
 
+export const { setCurrentProduct } = productsSlice.actions;
 export default productsSlice.reducer;

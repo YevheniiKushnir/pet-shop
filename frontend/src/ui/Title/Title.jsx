@@ -4,7 +4,7 @@ const Title = ({ children, className }) => {
   return (
     <h2
       className={clsx(
-        "font-bold text-4xl md:text-5xl lg:text-[64px] break-word w-fit",
+        "font-bold text-4xl md:text-5xl lg:text-[64px] break-words w-fit",
         className
       )}
     >

@@ -2,27 +2,18 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { ROUTES } from "../../utils/routes";
-import { slugify } from "../../utils/slugify";
+import { getCategorySlug, getProductSlug } from "../../utils/slugify";
 import Button from "../../ui/Button/Button";
-
-function getDiscountPercent(price, discountPrice) {
-  if (!price || price <= 0 || discountPrice >= price) return 0;
-
-  const discount = ((price - discountPrice) / price) * 100;
-  return Math.round(discount);
-}
-function priceFormatting(price) {
-  return `$${price}`;
-}
+import { getDiscountPercent, priceFormatting } from "../../utils/price";
 
 const ProductCard = React.memo(
-  ({ image, title, categoryId, price, discont_price }) => {
+  ({ id, image, title, categoryId, price, discont_price }) => {
     const [sale, setSale] = useState(null);
     const categories = useSelector((state) => state.categories.data);
 
     const category = categories.find((cat) => cat.id === categoryId);
-    const categorySlug = category ? slugify(category.title) : "unknown";
-    const productSlug = slugify(title);
+    const categorySlug = category ? getCategorySlug(category.title) : "unknown";
+    const productSlug = getProductSlug(title, id);
 
     const productLink = `${ROUTES.CATEGORIES}/${categorySlug}/${productSlug}`;
 
@@ -43,9 +34,7 @@ const ProductCard = React.memo(
           className="h-[200px] md:h-[280px] object-contain object-center border-b border-light-grey"
         />
         <div className="px-4 pb-4 md:px-8 md:pb-8 flex flex-col">
-          <h3 className="truncate overflow-hidden whitespace-nowrap">
-            {title}
-          </h3>
+          <h3 className="truncate">{title}</h3>
           {sale ? (
             <div className="flex items-end">
               <p className="font-semibold text-[40px] mr-4">
