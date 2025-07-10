@@ -32,7 +32,7 @@ const CategoriesSection = () => {
       ) : (
         <ListCards loading={loading} skeletonCount={8}>
           {data.slice(0, VISIBLE_CATEGORIES).map((category) => (
-            <CategoryCard key={category.id} {...category} />
+            <CategoryCard key={category.id} category={category} />
           ))}
         </ListCards>
       )}

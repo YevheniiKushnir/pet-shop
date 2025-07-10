@@ -11,17 +11,19 @@ import ListCards from "../../components/ListCards/ListCards";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import { SORT_OPTIONS } from "../../utils/sortOptions";
 import NoProductsFound from "../../components/NoProductsFound/NoProductsFound";
+import { selectDiscountedProducts } from "../../utils/redux/selectors";
 
 const DiscountsPage = () => {
   const dispatch = useDispatch();
-  const { data, loading, error } = useSelector((state) => state.products);
+  const { loading, error } = useSelector((state) => state.products);
+  const data = useSelector(selectDiscountedProducts);
   const titleOfPage = getLinkFromRoute(ROUTES.SALES).specLabel;
 
   useEffect(() => {
     if (!data.length) {
       dispatch(fetchAllProducts());
     }
-  });
+  }, [data.length, dispatch]);
 
   // FILTER AND SORT BY
   const [priceFrom, setPriceFrom] = useState("");
@@ -63,7 +65,7 @@ const DiscountsPage = () => {
           ) : filteredData.length > 0 ? (
             <ListCards>
               {filteredData.map((product) => (
-                <ProductCard key={product.id} {...product} />
+                <ProductCard key={product.id} product={product} />
               ))}
             </ListCards>
           ) : (

@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { ROUTES } from "../../utils/routes";
 import { getCategorySlug } from "../../utils/slugify";
 
-const CategoryCard = React.memo(({ image, title }) => {
+const CategoryCard = React.memo(({ category }) => {
+  const { image, title } = category;
   const slugTitle = getCategorySlug(title);
   return (
     <Link

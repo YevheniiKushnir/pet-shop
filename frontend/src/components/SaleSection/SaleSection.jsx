@@ -39,7 +39,7 @@ const SaleSection = () => {
       ) : (
         <ListCards loading={loading} skeletonCount={4}>
           {shuffled.map((product) => (
-            <ProductCard key={product.id} {...product} />
+            <ProductCard key={product.id} product={product} />
           ))}
         </ListCards>
       )}

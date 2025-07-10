@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { ROUTES, LINKS, getLinkFromRoute } from "../../utils/routes.js";
 import { useSelector } from "react-redux";
 import CrumbButton from "./CrumbButton/CrumbButton.jsx";
-import { getIdFromSlug, getCategoryBySlug } from "../../utils/slugify.js";
+import { getCategoryBySlug } from "../../utils/slugify.js";
 import Divider from "../Divider/Divider.jsx";
 
 const BreadCrumbs = () => {

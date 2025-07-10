@@ -8,7 +8,7 @@ import { addToCart } from "../../utils/redux/slices/cartSlice";
 import clsx from "clsx";
 import { makeSelectIsProductInCart } from "../../utils/redux/selectors";
 
-const ProductCard = React.memo((product) => {
+const ProductCard = React.memo(({ product }) => {
   const { id, image, title, categoryId, price, discont_price } = product;
   const categories = useSelector((state) => state.categories.data);
   const selectIsInCart = React.useMemo(

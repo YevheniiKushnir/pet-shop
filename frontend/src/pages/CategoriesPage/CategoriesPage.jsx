@@ -30,7 +30,7 @@ const CategoriesPage = () => {
       ) : (
         <ListCards loading={loading} skeletonCount={8}>
           {data.map((category) => (
-            <CategoryCard key={category.id} {...category} />
+            <CategoryCard key={category.id} category={category} />
           ))}
         </ListCards>
       )}

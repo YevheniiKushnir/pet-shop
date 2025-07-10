@@ -87,7 +87,7 @@ const CategoryPage = () => {
           ) : current?.data && filteredData.length > 0 ? (
             <ListCards>
               {filteredData.map((product) => (
-                <ProductCard key={product.id} {...product} />
+                <ProductCard key={product.id} product={product} />
               ))}
             </ListCards>
           ) : (
