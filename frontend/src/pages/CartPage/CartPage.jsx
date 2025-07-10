@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import TitleWithCrumbButton from "../../ui/TitleWithCrumbButton/TitleWithCrumbButton";
 import Button from "../../ui/Button/Button";
 import CartCard from "../../components/CartCard/CartCard";
@@ -6,7 +6,6 @@ import OrderForm from "../../components/OrderForm/OrderForm";
 import { ROUTES } from "../../utils/routes";
 import { useSelector } from "react-redux";
 import { priceFormatting } from "../../utils/price";
-import { SALE_SUBMITTED } from "../../utils/storage";
 
 const totalItemsSum = (items) => {
   return items.reduce((acc, item) => {
@@ -18,21 +17,16 @@ const totalItemsSum = (items) => {
 const CartPage = () => {
   const cartItems = useSelector((state) => state.cart.items);
   const totalSum = totalItemsSum(cartItems);
-  const [isDiscountApplied, setIsDiscountApplied] = useState(
-    Boolean(sessionStorage.getItem(SALE_SUBMITTED))
+  const {
+    isSubmitted: isDiscountApplied,
+    discountPercent,
+    discountUsed,
+  } = useSelector((state) => state.sale);
+  const effectiveDiscount =
+    !discountUsed && isDiscountApplied ? discountPercent : 0;
+  const discountedTotal = +(totalSum * (1 - effectiveDiscount / 100)).toFixed(
+    2
   );
-  useEffect(() => {
-    const handleStorage = () => {
-      setIsDiscountApplied(Boolean(sessionStorage.getItem(SALE_SUBMITTED)));
-    };
-
-    window.addEventListener("storage", handleStorage);
-    return () => window.removeEventListener("storage", handleStorage);
-  }, []);
-  const discountPercent = 5;
-  const discountedTotal = isDiscountApplied
-    ? +(totalSum * (1 - discountPercent / 100)).toFixed(2)
-    : totalSum;
 
   return (
     <div className="mb-10 md:mb-20">

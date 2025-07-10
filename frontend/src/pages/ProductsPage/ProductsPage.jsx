@@ -10,6 +10,7 @@ import ProductCard from "../../components/ProductCard/ProductCard";
 import ErrorInfo from "../../components/ErrorInfo/ErrorInfo";
 import filterAndSortProducts from "../../utils/filterAndSortProducts";
 import { SORT_OPTIONS } from "../../utils/sortOptions";
+import NoProductsFound from "../../components/NoProductsFound/NoProductsFound";
 
 const ProductsPage = () => {
   const dispatch = useDispatch();
@@ -55,11 +56,19 @@ const ProductsPage = () => {
       {error ? (
         <ErrorInfo />
       ) : (
-        <ListCards loading={loading} skeletonCount={8}>
-          {filteredData.map((product) => (
-            <ProductCard key={product.id} {...product} />
-          ))}
-        </ListCards>
+        <>
+          {loading ? (
+            <ListCards loading={true} skeletonCount={8} />
+          ) : filteredData.length > 0 ? (
+            <ListCards>
+              {filteredData.map((product) => (
+                <ProductCard key={product.id} {...product} />
+              ))}
+            </ListCards>
+          ) : (
+            <NoProductsFound />
+          )}
+        </>
       )}
     </div>
   );

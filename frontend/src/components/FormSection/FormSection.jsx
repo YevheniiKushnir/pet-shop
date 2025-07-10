@@ -6,62 +6,62 @@ import Input from "../../ui/Input/Input";
 import ErrorInfo from "../ErrorInfo/ErrorInfo";
 import Alert from "../../ui/Alert/Alert";
 import { useDispatch, useSelector } from "react-redux";
-import { sendSaleRequest } from "../../utils/redux/slices/saleSlice";
+import {
+  resetSubmission,
+  resetSuccess,
+  sendSaleRequest,
+} from "../../utils/redux/slices/saleSlice";
 import resetImg from "../../assets/reset.svg";
-import { SALE_FORM_DATA, SALE_SUBMITTED } from "../../utils/storage";
 
 const FormSection = () => {
   const dispatch = useDispatch();
-  const {
-    loading,
-    status: success,
-    error,
-  } = useSelector((state) => state.sale);
+  const { loading, success, error, isSubmitted, dataUserSale, discountUsed } =
+    useSelector((state) => state.sale);
 
   const [alertOpen, setAlertOpen] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const {
     register,
     handleSubmit,
     setValue,
-    getValues,
     reset,
     formState: { errors },
   } = useForm();
 
   useEffect(() => {
-    const submitted = sessionStorage.getItem(SALE_SUBMITTED);
-    const formData = JSON.parse(sessionStorage.getItem(SALE_FORM_DATA) || "{}");
-
-    if (submitted) {
-      setIsSubmitted(true);
-      Object.entries(formData).forEach(([key, value]) => {
+    if (isSubmitted && dataUserSale) {
+      Object.entries(dataUserSale).forEach(([key, value]) => {
         setValue(key, value);
       });
     }
-  }, [setValue]);
-
-  useEffect(() => {
-    const submitted = sessionStorage.getItem(SALE_SUBMITTED);
-
-    if (success && !submitted) {
-      setAlertOpen(true);
-      sessionStorage.setItem(SALE_SUBMITTED, "true");
-      sessionStorage.setItem(SALE_FORM_DATA, JSON.stringify(getValues()));
-      setIsSubmitted(true);
-    }
-  }, [success, getValues]);
+  }, [isSubmitted, dataUserSale, setValue]);
 
   const onSubmit = (data) => {
     if (isSubmitted) return;
     dispatch(sendSaleRequest(data));
   };
 
+  useEffect(() => {
+    if (success) {
+      setAlertOpen(true);
+    }
+  }, [success]);
+
+  useEffect(() => {
+    if (discountUsed) {
+      reset();
+      dispatch(resetSubmission());
+    }
+  }, [discountUsed, reset, dispatch]);
+
   const disabled = loading || isSubmitted;
 
   if (error) {
     return <ErrorInfo />;
+  }
+
+  if (discountUsed) {
+    return null;
   }
 
   return (
@@ -119,9 +119,8 @@ const FormSection = () => {
               <button
                 type="button"
                 onClick={() => {
-                  sessionStorage.removeItem(SALE_SUBMITTED);
-                  sessionStorage.removeItem(SALE_FORM_DATA);
-                  setIsSubmitted(false);
+                  dispatch(resetSubmission());
+
                   reset();
                 }}
                 className="absolute top-0 right-0 w-10 md:w-12 cursor-pointer hover:rotate-90 transition-transform duration-300"
@@ -139,7 +138,10 @@ const FormSection = () => {
           p1={"Thank you! Your request was submitted successfully."}
           p2={"Check your email to get the discount bonus."}
           isOpen={alertOpen}
-          onClose={() => setAlertOpen(false)}
+          onClose={() => {
+            setAlertOpen(false);
+            dispatch(resetSuccess());
+          }}
         />
       )}
     </section>

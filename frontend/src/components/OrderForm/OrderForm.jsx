@@ -10,14 +10,17 @@ import {
 } from "../../utils/redux/slices/orderSlice";
 import Button from "../../ui/Button/Button";
 import { clearCart } from "../../utils/redux/slices/cartSlice";
-import { SALE_SUBMITTED, SALE_FORM_DATA } from "../../utils/storage";
+import {
+  discountConsumed,
+  resetSubmission,
+} from "../../utils/redux/slices/saleSlice";
 
 const OrderForm = ({ cartItems, totalSum }) => {
   const dispatch = useDispatch();
   const { error, success } = useSelector((state) => state.order);
+  const discountUsed = useSelector((state) => state.sale.discountUsed);
 
   const [alertOpen, setAlertOpen] = useState(false);
-  const [prevSuccess, setPrevSuccess] = useState(false);
 
   const {
     register,
@@ -27,14 +30,13 @@ const OrderForm = ({ cartItems, totalSum }) => {
   } = useForm();
 
   useEffect(() => {
-    if (success && !prevSuccess) {
+    if (success) {
+      dispatch(discountConsumed());
       setAlertOpen(true);
       reset();
-      sessionStorage.removeItem(SALE_SUBMITTED);
-      sessionStorage.removeItem(SALE_FORM_DATA);
+      dispatch(resetSubmission());
     }
-    setPrevSuccess(success);
-  }, [success, reset, prevSuccess]);
+  }, [success, reset, dispatch, discountUsed]);
 
   const onSubmit = (formData) => {
     const order = {

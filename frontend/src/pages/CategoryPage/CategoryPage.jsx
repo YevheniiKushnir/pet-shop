@@ -15,6 +15,7 @@ import { getCategoryBySlug } from "../../utils/slugify.js";
 import filterAndSortProducts from "../../utils/filterAndSortProducts.js";
 import { SORT_OPTIONS } from "../../utils/sortOptions.js";
 import NotFoundPage from "../NotFoundPage/NotFoundPage.jsx";
+import NoProductsFound from "../../components/NoProductsFound/NoProductsFound.jsx";
 
 const CategoryPage = () => {
   const { slug } = useParams();
@@ -80,12 +81,19 @@ const CategoryPage = () => {
       {error ? (
         <ErrorInfo />
       ) : (
-        <ListCards loading={loading} skeletonCount={4}>
-          {current?.data &&
-            filteredData.map((product) => (
-              <ProductCard key={product.id} {...product} />
-            ))}
-        </ListCards>
+        <>
+          {loading ? (
+            <ListCards loading={true} skeletonCount={4} />
+          ) : current?.data && filteredData.length > 0 ? (
+            <ListCards>
+              {filteredData.map((product) => (
+                <ProductCard key={product.id} {...product} />
+              ))}
+            </ListCards>
+          ) : (
+            <NoProductsFound />
+          )}
+        </>
       )}
     </div>
   );
