@@ -1,14 +1,15 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import TitleWithCrumbButton from "../../ui/TitleWithCrumbButton/TitleWithCrumbButton";
 import ListCards from "../ListCards/ListCards";
 import ProductCard from "../ProductCard/ProductCard";
 import { ROUTES } from "../../utils/routes";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllProducts } from "../../utils/redux/slices/productsSlice";
-import { selectVisibleRandomDiscountedProducts } from "../../utils/redux/selectors";
+import { selectDiscountedProducts } from "../../utils/redux/selectors";
 
 const SaleSection = () => {
-  const { data, loading, error } = useSelector((store) => store.products);
+  const { data, loading, error } = useSelector((state) => state.products);
+  const discounted = useSelector(selectDiscountedProducts);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -17,12 +18,14 @@ const SaleSection = () => {
     }
   }, [dispatch, data.length]);
 
-  const visibleItems = 4;
-  const randomDiscountedSelector = useMemo(
-    () => selectVisibleRandomDiscountedProducts(visibleItems),
-    [visibleItems]
-  );
-  const randomDiscounted = useSelector(randomDiscountedSelector);
+  const [shuffled, setShuffled] = useState([]);
+
+  useEffect(() => {
+    const randomItems = [...discounted]
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 4);
+    setShuffled(randomItems);
+  }, [discounted]);
 
   return (
     <section>
@@ -35,7 +38,7 @@ const SaleSection = () => {
         <ErrorInfo />
       ) : (
         <ListCards loading={loading} skeletonCount={4}>
-          {randomDiscounted.map((product) => (
+          {shuffled.map((product) => (
             <ProductCard key={product.id} {...product} />
           ))}
         </ListCards>

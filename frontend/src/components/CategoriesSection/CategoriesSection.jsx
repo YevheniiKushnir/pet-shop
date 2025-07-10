@@ -10,7 +10,7 @@ import { ROUTES } from "../../utils/routes";
 const VISIBLE_CATEGORIES = 4;
 
 const CategoriesSection = () => {
-  const { data, loading, error } = useSelector((store) => store.categories);
+  const { data, loading, error } = useSelector((state) => state.categories);
   const dispatch = useDispatch();
 
   useEffect(() => {

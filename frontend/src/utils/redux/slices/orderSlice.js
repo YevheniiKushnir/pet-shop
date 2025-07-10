@@ -21,6 +21,7 @@ const orderSlice = createSlice({
     message: "",
     loading: false,
     error: null,
+    success: null,
   },
   reducers: {
     resetOrderState: (state) => {
@@ -28,6 +29,7 @@ const orderSlice = createSlice({
       state.message = "";
       state.loading = false;
       state.error = null;
+      state.success = null;
     },
   },
   extraReducers: (builder) => {
@@ -35,11 +37,13 @@ const orderSlice = createSlice({
       .addCase(sendOrder.pending, (state) => {
         state.loading = true;
         state.error = null;
+        state.success = null;
       })
       .addCase(sendOrder.fulfilled, (state, action) => {
         state.loading = false;
         state.status = action.payload.status;
         state.message = action.payload.message;
+        state.success = action.payload;
       })
       .addCase(sendOrder.rejected, (state, action) => {
         state.loading = false;

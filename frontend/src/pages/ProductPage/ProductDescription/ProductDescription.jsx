@@ -1,7 +1,7 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import clsx from "clsx";
 
-const ProductDescription = ({ text }) => {
+const ProductDescription = React.memo(({ text }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
@@ -9,7 +9,7 @@ const ProductDescription = ({ text }) => {
       <p className="mb-2 font-semibold">Description</p>
       <p
         className={clsx("text-[16px] transition-all duration-300", {
-          "line-clamp-6": !isExpanded,
+          "line-clamp-3": !isExpanded,
         })}
       >
         {text}
@@ -22,6 +22,6 @@ const ProductDescription = ({ text }) => {
       </button>
     </div>
   );
-};
+});
 
 export default ProductDescription;

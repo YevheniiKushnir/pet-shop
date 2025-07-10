@@ -9,7 +9,7 @@ import { fetchAllCategories } from "../../utils/redux/slices/categoriesSlice";
 import { ROUTES, getLinkFromRoute } from "../../utils/routes";
 
 const CategoriesPage = () => {
-  const { data, loading, error } = useSelector((store) => store.categories);
+  const { data, loading, error } = useSelector((state) => state.categories);
   const dispatch = useDispatch();
   const titleOfPage = getLinkFromRoute(ROUTES.CATEGORIES).label;
 

@@ -9,10 +9,11 @@ import filterAndSortProducts from "../../utils/filterAndSortProducts";
 import ErrorInfo from "../../components/ErrorInfo/ErrorInfo";
 import ListCards from "../../components/ListCards/ListCards";
 import ProductCard from "../../components/ProductCard/ProductCard";
+import { SORT_OPTIONS } from "../../utils/sortOptions";
 
 const DiscountsPage = () => {
   const dispatch = useDispatch();
-  const { data, loading, error } = useSelector((store) => store.products);
+  const { data, loading, error } = useSelector((state) => state.products);
   const titleOfPage = getLinkFromRoute(ROUTES.SALES).specLabel;
 
   useEffect(() => {
@@ -25,7 +26,7 @@ const DiscountsPage = () => {
   const [priceFrom, setPriceFrom] = useState("");
   const [priceTo, setPriceTo] = useState("");
   const [discountOnly, setDiscountOnly] = useState(true);
-  const [sortOption, setSortOption] = useState("by default");
+  const [sortOption, setSortOption] = useState(SORT_OPTIONS[0]);
 
   const filteredData = useMemo(() => {
     return filterAndSortProducts({

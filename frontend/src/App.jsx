@@ -8,6 +8,7 @@ import CategoryPage from "./pages/CategoryPage/CategoryPage";
 import ProductPage from "./pages/ProductPage/ProductPage";
 import ProductsPage from "./pages/ProductsPage/ProductsPage";
 import DiscountsPage from "./pages/DiscountsPage/DiscountsPage";
+import CartPage from "./pages/CartPage/CartPage";
 import { ROUTES } from "./utils/routes";
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
           path={`${ROUTES.CATEGORIES}/:slug/:productSlug`}
           element={<ProductPage />}
         />
+        <Route path={ROUTES.CART} element={<CartPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </MainLayout>

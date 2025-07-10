@@ -13,6 +13,8 @@ import ErrorInfo from "../../components/ErrorInfo/ErrorInfo.jsx";
 import ProductCard from "../../components/ProductCard/ProductCard.jsx";
 import { getCategoryBySlug } from "../../utils/slugify.js";
 import filterAndSortProducts from "../../utils/filterAndSortProducts.js";
+import { SORT_OPTIONS } from "../../utils/sortOptions.js";
+import NotFoundPage from "../NotFoundPage/NotFoundPage.jsx";
 
 const CategoryPage = () => {
   const { slug } = useParams();
@@ -41,7 +43,7 @@ const CategoryPage = () => {
   const [priceFrom, setPriceFrom] = useState("");
   const [priceTo, setPriceTo] = useState("");
   const [discountOnly, setDiscountOnly] = useState(false);
-  const [sortOption, setSortOption] = useState("by default");
+  const [sortOption, setSortOption] = useState(SORT_OPTIONS[0]);
 
   const filteredData = useMemo(() => {
     if (!current?.data) return [];
@@ -54,6 +56,10 @@ const CategoryPage = () => {
       sortOption,
     });
   }, [current, priceFrom, priceTo, discountOnly, sortOption]);
+
+  if (!loading && slug && !current) {
+    return <NotFoundPage />;
+  }
 
   return (
     <div className="mb-10 md:mb-20">

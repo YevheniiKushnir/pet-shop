@@ -3,7 +3,7 @@ import Title from "../../ui/Title/Title";
 import Button from "../../ui/Button/Button";
 import { ROUTES } from "../../utils/routes";
 
-const NotFound = () => {
+const NotFoundPage = () => {
   return (
     <div className="my-10 md:my-20 w-full max-w-[690px] m-auto flex flex-col gap-8 items-center">
       <img src={notFoundImg} alt="Page Not Found" className="h-32 md:h-70" />
@@ -21,4 +21,4 @@ const NotFound = () => {
   );
 };
 
-export default NotFound;
+export default NotFoundPage;

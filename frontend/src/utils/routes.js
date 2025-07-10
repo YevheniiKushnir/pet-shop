@@ -3,7 +3,7 @@ export const ROUTES = {
   CATEGORIES: "/categories",
   PRODUCTS: "/products",
   SALES: "/discounted-items",
-  CART: "/cart",
+  CART: "/shopping-cart",
 };
 
 export const LINKS = [

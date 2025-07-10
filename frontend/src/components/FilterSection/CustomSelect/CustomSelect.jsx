@@ -1,16 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
+import { SORT_OPTIONS } from "../../../utils/sortOptions";
 import clsx from "clsx";
 
 const CustomSelect = React.memo(
   ({ selectedValue, onSelect, placeholder = "Select" }) => {
     const [isOpen, setIsOpen] = useState(false);
     const selectRef = useRef(null);
-    const sortOptions = [
-      "by default",
-      "newest",
-      "price: high-low",
-      "price: low-high",
-    ];
 
     useEffect(() => {
       const handleClickOutside = (event) => {
@@ -66,7 +61,7 @@ const CustomSelect = React.memo(
 
         {isOpen && (
           <div className="absolute z-110 w-full mt-1 bg-main-white border border-light-grey rounded shadow-lg">
-            {sortOptions.map((option) => (
+            {SORT_OPTIONS.map((option) => (
               <div
                 key={option}
                 className={clsx(

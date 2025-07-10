@@ -7,8 +7,14 @@ export const selectDiscountedProducts = createSelector(
   (products) => products.filter((product) => product.discont_price !== null)
 );
 
-export const selectVisibleRandomDiscountedProducts = (count = 4) =>
-  createSelector([selectDiscountedProducts], (discounted) => {
-    const shuffled = [...discounted].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, count);
-  });
+export const selectCartItems = (state) => state.cart.items;
+
+export const makeSelectIsProductInCart = (productId) =>
+  createSelector([selectCartItems], (items) =>
+    items.some((item) => item.id === productId)
+  );
+
+export const makeSelectCartItemById = (productId) =>
+  createSelector([selectCartItems], (items) =>
+    items.find((item) => item.id === productId)
+  );

@@ -2,15 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import bgImg from "../../assets/banner/banner2.png";
 import Title from "../../ui/Title/Title";
-import Input from "./Input/Input";
+import Input from "../../ui/Input/Input";
 import ErrorInfo from "../ErrorInfo/ErrorInfo";
 import Alert from "../../ui/Alert/Alert";
 import { useDispatch, useSelector } from "react-redux";
 import { sendSaleRequest } from "../../utils/redux/slices/saleSlice";
 import resetImg from "../../assets/reset.svg";
-
-const SALE_SUBMITTED = "sale_submitted";
-const SALE_FORM_DATA = "sale_form_data";
+import { SALE_FORM_DATA, SALE_SUBMITTED } from "../../utils/storage";
 
 const FormSection = () => {
   const dispatch = useDispatch();
@@ -33,8 +31,8 @@ const FormSection = () => {
   } = useForm();
 
   useEffect(() => {
-    const submitted = localStorage.getItem(SALE_SUBMITTED);
-    const formData = JSON.parse(localStorage.getItem(SALE_FORM_DATA) || "{}");
+    const submitted = sessionStorage.getItem(SALE_SUBMITTED);
+    const formData = JSON.parse(sessionStorage.getItem(SALE_FORM_DATA) || "{}");
 
     if (submitted) {
       setIsSubmitted(true);
@@ -45,12 +43,12 @@ const FormSection = () => {
   }, [setValue]);
 
   useEffect(() => {
-    const submitted = localStorage.getItem(SALE_SUBMITTED);
+    const submitted = sessionStorage.getItem(SALE_SUBMITTED);
 
     if (success && !submitted) {
       setAlertOpen(true);
-      localStorage.setItem(SALE_SUBMITTED, "true");
-      localStorage.setItem(SALE_FORM_DATA, JSON.stringify(getValues()));
+      sessionStorage.setItem(SALE_SUBMITTED, "true");
+      sessionStorage.setItem(SALE_FORM_DATA, JSON.stringify(getValues()));
       setIsSubmitted(true);
     }
   }, [success, getValues]);
@@ -121,8 +119,8 @@ const FormSection = () => {
               <button
                 type="button"
                 onClick={() => {
-                  localStorage.removeItem(SALE_SUBMITTED);
-                  localStorage.removeItem(SALE_FORM_DATA);
+                  sessionStorage.removeItem(SALE_SUBMITTED);
+                  sessionStorage.removeItem(SALE_FORM_DATA);
                   setIsSubmitted(false);
                   reset();
                 }}
