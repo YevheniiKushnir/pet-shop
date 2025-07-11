@@ -48,7 +48,7 @@ const CartPage = () => {
         <div className="flex flex-col lg:flex-row gap-4 w-full">
           <div className="flex flex-col gap-4 xl:w-[60%]">
             {cartItems.map((item) => (
-              <CartCard key={item.id} {...item} />
+              <CartCard key={item.id} item={item} />
             ))}
           </div>
           <div className="p-4 xl:p-5 bg-secondary-grey lg:w-[40%] h-max rounded-xl">
